@@ -45,14 +45,10 @@ namespace
 BOOST_PYTHON_MODULE(graph)
 {
 	// Reflect enums
-	bp::enum_<FeatureType>("FeatureType")
-		.value("fNull", fNull)
-		.value("fID", fID)
-		.value("fContext", fContext)
-		.value("fEncode", fEncode)
-		.value("fSpelling", fSpelling)
-		.value("fAcronym", fAcronym)
-		;
+#define X(x) .value(#x, x)
+	bp::enum_<FeatureType>("FeatureType") FEATURETYPES;
+#undef X
+
 	bp::enum_<SymbolValue>("SymbolValue")
 		.value("vNull", vNull)
 		.value("ven_US", ven_US)

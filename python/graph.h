@@ -16,6 +16,11 @@
 enum FeatureType { FEATURETYPES };
 #undef X
 
+#define X(x) case x: return #x;
+inline char const *
+FeatureTypeToString(FeatureType f) { switch(f) { FEATURETYPES } }
+#undef X
+
 enum SymbolValue {
 	vNull,
 	ven_US,

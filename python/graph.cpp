@@ -87,7 +87,7 @@ BOOST_PYTHON_MODULE(graph)
 		.def_readwrite("type_", &Node::type_)
 		.def_readwrite("start_", &Node::start_)
 		.def_readwrite("end_", &Node::end_)
-		.def_readwrite("elements_", &Node::labels_);
+		.def_readwrite("labels_", &Node::labels_);
 
 	bp::class_<Graph>("Graph")
 		.def_readwrite("text_", &Graph::text_)
@@ -113,4 +113,7 @@ BOOST_PYTHON_MODULE(graph)
 
 	bp::class_<std::vector<Node>>("Nodes")
 		.def(bp::vector_indexing_suite<std::vector<Node>>());
+
+	// Reflect functions
+	bp::def("Encode", Encode);
 }

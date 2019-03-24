@@ -7,6 +7,7 @@
 #define FEATURETYPES \
 	X(fNull) \
 	X(fID) \
+	X(fLanguage) \
 	X(fContext) \
 	X(fEncode) \
 	X(fSpelling) \
@@ -90,3 +91,9 @@ struct Graph
 	std::vector<Edge> edges_;
 	std::vector<Node> nodes_;
 };
+
+// Encode function
+inline int Encode(Graph & graph)
+{
+	throw std::runtime_error("NYI!");
+}

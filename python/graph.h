@@ -7,6 +7,7 @@
 enum FeatureType {
 	fNull,
 	fID,
+	fLanguage,
 	fContext,
 	fEncode,
 	fSpelling,
@@ -82,3 +83,9 @@ struct Graph
 	std::vector<Edge> edges_;
 	std::vector<Node> nodes_;
 };
+
+// Encode function
+inline int Encode(Graph & graph)
+{
+	throw std::runtime_error("NYI!");
+}

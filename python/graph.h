@@ -4,17 +4,14 @@
 #include <vector>
 #include <variant>
 
-#define FEATURETYPES \
-	X(fNull) \
-	X(fID) \
-	X(fContext) \
-	X(fEncode) \
-	X(fSpelling) \
-	X(fAcronym)
-
-#define X(x) x,
-enum FeatureType { FEATURETYPES };
-#undef X
+enum FeatureType {
+	fNull,
+	fID,
+	fContext,
+	fEncode,
+	fSpelling,
+	fAcronym
+};
 
 enum SymbolValue {
 	vNull,

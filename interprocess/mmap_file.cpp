@@ -98,23 +98,28 @@ void ReadExistingMMF(std::string const & mmf_name)
 
 void WriteNewMMF(std::string const & mmf_name)
 {
-	// Note: managed_mapped_file uses the default char type, memory allocation
-	// and synchronisation strategy and index.
-	auto fp = std::make_unique<ip::managed_mapped_file>
+	{
+		// Note: managed_mapped_file uses the default char type, memory allocation
+		// and synchronisation strategy and index.
+		auto fp = std::make_unique<ip::managed_mapped_file>
 			(ip::create_only, mmf_name.c_str(), 1000000);
 
-	// To allocate objects in the file, use its allocator
-	VoidAllocator allocator = fp->get_segment_manager();
+		// To allocate objects in the file, use its allocator
+		VoidAllocator allocator = fp->get_segment_manager();
 
-	// Add version string
-	fp->construct<String>("Version")("ACCU 2019", allocator);
+		// Add version string
+		fp->construct<String>("Version")("ACCU 2019", allocator);
 
-	// Create a Terminology instance - there's just one of these
-	auto terminology = fp->construct<Terminology>(ip::unique_instance)(allocator);
+		// Create a Terminology instance - there's just one of these
+		auto terminology = fp->construct<Terminology>(ip::unique_instance)(allocator);
 
-	// Now add contents to the terminology
-	auto const concepts = LoadConcepts();
-	terminology->StoreAncestors(concepts);
+		// Now add contents to the terminology
+		auto const concepts = LoadConcepts();
+		terminology->StoreAncestors(concepts);
+
+		fp->flush();
+	}
+	ip::managed_mapped_file::shrink_to_fit(mmf_name.c_str());
 }
 
 // Example showing how to read and write a MMF.

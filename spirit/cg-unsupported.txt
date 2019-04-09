@@ -1,0 +1,19 @@
+# Here are some valid SCG expressions, which are not supported
+# by our very limited SCG parser/generator
+
+# Concept without term
+64572001
+
+# Multiple focus concepts
+421720008 |Spray dose form| +  7946007 |Drug suspension|
+
+# Expressions with Attribute Groups
+71388002 |Procedure|:
+   {  260686004 |Method| =  129304002 |Excision - action|,
+      405813007 |Procedure site - direct| =  15497006 |Ovarian structure|}
+   {  260686004 |Method| =  129304002 |Excision - action|,
+      405813007 |Procedure site - direct| =  31435000 |Fallopian tube structure|}
+
+# Expressions with Nested Refinements
+373873005 |Pharmaceutical / biologic product|:
+    411116001 |Has dose form| = ( 421720008 |Spray dose form| +  7946007 |Drug suspension|)

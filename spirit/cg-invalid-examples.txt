@@ -1,0 +1,13 @@
+# https://confluence.ihtsdotools.org/display/DOCSCG/6+Examples
+# Our parser requires terms
+# (Exercise for the reader - lift this restriction)
+64572001
+
+# A lone term is invalid
+|disease|
+
+# Missing final focus
+421720008 |Spray dose form| +  7946007 |Drug suspension| +
+
+# Refinement attribute has no value
+83152002 |Oophorectomy|: 405815000 |Procedure device| =

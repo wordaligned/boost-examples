@@ -1,0 +1,23 @@
+# https://confluence.ihtsdotools.org/display/DOCSCG/6+Examples
+# Simple expressions
+64572001 |disease|
+
+421720008 |Spray dose form|
+
+7946007 |Drug suspension|
+
+# Expressions with refinements
+83152002 |Oophorectomy|:
+    405815000 |Procedure device| = 122456005 |Laser device|
+
+65801008 |Excision|:
+    405813007 |Procedure site - direct| = 66754008 |Appendix structure| ,
+    260870009 |Priority| =  25876001 |Emergency|
+
+# Different whitespace
+65801008 |Excision|:
+    405813007 |Procedure site - direct|
+        = 66754008 |Appendix structure|
+        ,
+    260870009 |Priority|
+        = 25876001 |Emergency|

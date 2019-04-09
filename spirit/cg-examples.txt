@@ -7,6 +7,8 @@
 7946007 |Drug suspension|
 
 # Expressions with refinements
+ 182201002 |Hip joint|:  272741003 |Laterality| = 24028007 |Right|
+
 83152002 |Oophorectomy|:
     405815000 |Procedure device| = 122456005 |Laser device|
 
@@ -21,3 +23,11 @@
         ,
     260870009 |Priority|
         = 25876001 |Emergency|
+
+# Expression with nested refinements
+397956004 |Prosthetic arthroplasty of the hip|:
+    363704007 |Procedure site| = (
+        24136001 |Hip joint structure|: 
+        272741003 |Laterality| = 7771000 |Left|
+        )
+

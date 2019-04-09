@@ -17,7 +17,7 @@ namespace karma = spirit::karma;
 namespace qi = spirit::qi;
 
 // Define the structures used to represent SNOMED expressions.
-// Note: this is a much reduced subset for expositional purposes
+// Note: this is a reduced subset for expositional purposes.
 struct Expression;
 
 // A concept is an integer id and a descriptive term
@@ -44,12 +44,12 @@ struct scg_generator_grammar
 {
 	scg_generator_grammar() : scg_generator_grammar::base_type(expression)
 	{
-		expression         %= concept << -refinements;
-		term               %= '|' << +karma::char_ << '|';
-		concept            %= karma::long_long << term;
-		refinements        %= ':' << attribute % ',' | karma::eps;
-		attribute          %= concept << '=' << attributeValue;
-		attributeValue     %= concept | '(' << expression << ')';
+		expression     %= concept << -refinements;
+		term           %= '|' << +karma::char_ << '|';
+		concept        %= karma::long_long << term;
+		refinements    %= ':' << attribute % ',' | karma::eps;
+		attribute      %= concept << '=' << attributeValue;
+		attributeValue %= concept | '(' << expression << ')';
 	}
 
 	karma::rule<OutIt, std::string()> term;
@@ -74,16 +74,16 @@ struct composition_grammar : qi::grammar<Iter, Expression(), ascii::space_type>
 		using phoenix::val;
 
 		/* Notes:
-			 a "lexeme" is a primitive or atom
+			 A "lexeme" is a primitive or atom
 			 Operators: % list, | alternative, > expect, >> sequence,
 			            - optional, + one or more
 			 %= applies the parsed attribute directly (auto-rules) */
-		term              %= qi::lexeme['|' > +(qi::char_ - '|') > '|'];
-		concept           %= qi::ulong_long > term;
-		attributeValue    %= concept | '(' > expression > ')';
-		attribute         %= concept > '=' > attributeValue;
-		refinements       %= attribute % ',';
-		expression        %= concept >> -(':' > refinements);
+		term           %= qi::lexeme['|' > +(qi::char_ - '|') > '|'];
+		concept        %= qi::ulong_long > term;
+		attributeValue %= concept | '(' > expression > ')';
+		attribute      %= concept > '=' > attributeValue;
+		refinements    %= attribute % ',';
+		expression     %= concept >> -(':' > refinements);
 
 		// Name our rules for better reporting
 		expression.name("expression");
@@ -146,17 +146,18 @@ std::pair<bool, Expression> parse(std::string const & scg)
 	return {ok, ok ? expression : Expression{}};
 }
 
+// Comments start with a '#'
+bool is_comment(std::string const & line)
+{
+	return !line.empty() && line[0] == '#';
+}
+
 int main()
 {
-	if (auto const [ok, cg_example] = parse("64572001 |disease|"); ok)
-	{
-		std::cout << generate(cg_example) << "\n\n";
-	}
-
 	// Read lines from stdin
 	for (std::string line, cg_example; std::getline(std::cin, line);)
 	{
-		if (line[0] != '#') // skip comments
+		if (!is_comment(line))
 		{
 			cg_example += line; // accumulate CG expressions
 

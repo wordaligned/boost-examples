@@ -9,3 +9,6 @@ find_package(Boost REQUIRED COMPONENTS python36)
 
 link_libraries(${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
 python_add_module(graph graph.cpp)
+
+add_subdirectory(pybind11)
+pybind11_add_module(graph11 graph11.cpp)

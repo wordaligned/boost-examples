@@ -23,12 +23,15 @@ struct Expression;
 // A concept is an integer id and a descriptive term
 struct Concept { uint64_t id_; std::string term_; };
 
-// An attribute value is a Concept or -- recursively -- an Expression
+// An attribute value is a Concept or an Expression
 typedef	boost::variant<
 	Concept, boost::recursive_wrapper<Expression>> AttributeValue;
 
-struct Attribute  { Concept name_; AttributeValue value_; };
-struct Expression { Concept concept_; std::vector<Attribute> refinements_; };
+struct Attribute
+{ Concept name_; AttributeValue value_; };
+
+struct Expression
+{ Concept concept_; std::vector<Attribute> refinements_; };
 
 // Adapt the structs for use with the Spirit grammar
 BOOST_FUSION_ADAPT_STRUCT(Attribute, name_, value_)

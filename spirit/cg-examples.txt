@@ -1,4 +1,9 @@
 # https://confluence.ihtsdotools.org/display/DOCSCG/6+Examples
+#
+# File format: a leading # makes the line a comment
+# Expressions can span multiple lines
+# A blank line terminates an expression
+#
 # Simple expressions
 64572001 |disease|
 
@@ -7,7 +12,7 @@
 7946007 |Drug suspension|
 
 # Expressions with refinements
- 182201002 |Hip joint|:  272741003 |Laterality| = 24028007 |Right|
+182201002 |Hip joint|:  272741003 |Laterality| = 24028007 |Right|
 
 83152002 |Oophorectomy|:
     405815000 |Procedure device| = 122456005 |Laser device|

@@ -5,17 +5,22 @@
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 #pragma warning (default: 4267)
 
+namespace bp = boost::python;
+
+// Equality operators required for bp::vector_indexing_suite
+bool operator==(Edge const & L, Edge const & R)
+{ return L.type_ == R.type_ && L.from_ == R.from_ && L.to_ == R.to_; }
+
+bool operator==(Node const & L, Node const & R)
+{ return L.id_ == R.id_; }
+
+bool operator==(Feature const & L, Feature const & R)
+{ return L.type_ == R.type_ && L.value_ == R.value_; }
+
 // Helper for std::visit - used to reflect std::variant FeatureValue
 // See: https://en.cppreference.com/w/cpp/utility/variant/visit
 template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
 template<class... Ts> overloaded(Ts...)->overloaded<Ts...>;
-
-namespace bp = boost::python;
-
-// Equality operators required for bp::vector_indexing_suite
-bool operator==(Edge const & L, Edge const & R) { return L.type_ == R.type_ && L.from_ == R.from_ && L.to_ == R.to_; }
-bool operator==(Node const & L, Node const & R) { return L.id_ == R.id_; }
-bool operator==(Feature const & L, Feature const & R) { return L.type_ == R.type_ && L.value_ == R.value_; }
 
 namespace
 {
@@ -59,9 +64,6 @@ BOOST_PYTHON_MODULE(graph)
 		.value("ven_US", ven_US)
 		.value("vEn_GB", vEn_GB)
 		.value("ven_AU", ven_AU)
-		.value("vAND", vAND)
-		.value("vOR", vOR)
-		.value("vNOT", vNOT)
 		;
 	bp::enum_<EdgeType>("EdgeType")
 		.value("eNull", eNull)
@@ -99,7 +101,7 @@ BOOST_PYTHON_MODULE(graph)
 		.def_readwrite("edges_", &Graph::edges_)
 		.def_readwrite("nodes_", &Graph::nodes_);
 
-	// Reflect struct with variant member 
+	// Reflect struct with variant member
 	bp::class_<Feature>("Feature")
 		.def_readwrite("type_", &Feature::type_)
 		.add_property("string_value", get<std::string>, set<std::string>)
